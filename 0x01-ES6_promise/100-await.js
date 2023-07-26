@@ -1,8 +1,22 @@
-import asyncUploadUser from "./utils.js";
+function getAsyncData(){
+	return new Promise(function(resolve){
+		setTimeout(function(){
+			resolve({
+				name: "Amr"
+			});
+		},2000);
+	});
+}
 
-const test = async () => {
-    const value = await asyncUploadUser();
-    console.log(value);
-};
+function getData(){
+	return new Promise(function(resolve){
+		getAsyncData().then(function(data){
+			resolve(data);
+		});
+	})
+}
 
-test();
+getData()
+.then(function(data){
+	console.log(data); //will print {name: "Amr"} after 2 seconds
+});
