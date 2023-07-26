@@ -1,22 +1,12 @@
-function getAsyncData(){
-	return new Promise(function(resolve){
-		setTimeout(function(){
-			resolve({
-				name: "Amr"
-			});
-		},2000);
-	});
-}
+import { uploadPhoto, createUser } from './utils';
 
-function getData(){
-	return new Promise(function(resolve){
-		getAsyncData().then(function(data){
-			resolve(data);
-		});
-	})
-}
+export default async function asyncUploadUser() {
+  try {
+    const prom1 = await uploadPhoto();
+    const prom2 = await createUser();
 
-getData()
-.then(function(data){
-	console.log(data); //will print {name: "Amr"} after 2 seconds
-});
+    return ({ photo: prom1, user: prom2 });
+  } catch (error) {
+    return ({ photo: null, user: null });
+  }
+}
